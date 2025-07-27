@@ -84,38 +84,31 @@ export default function Home() {
   };
 
   return (
-    <div className="flex h-screen bg-background text-foreground">
-      <Sidebar />
-      <main className="flex-1 flex flex-col">
-        <Header />
-        <div className="flex-1 flex flex-col p-4">
-          <ModelSelector setModel={setModel} />
+    <div className="flex flex-col h-screen bg-background text-foreground">
+      <Header />
+      <main className="flex-1 flex flex-col items-center justify-center p-4">
+        <div className="w-full max-w-2xl">
           <ChatMessages messages={messages} />
+          <ChatInput onSendMessage={handleSendMessage} />
+          <div className="flex justify-center gap-4 mt-4">
+            <button
+              className="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
+            >
+              DeepSearch
+            </button>
+            <button
+              className="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
+            >
+              Think
+            </button>
+            <button
+              className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              onClick={() => setShowImageModal(true)}
+            >
+              Create Images
+            </button>
+          </div>
         </div>
-        <div className="p-4 border-t border-gray-700 flex gap-4">
-          <button
-            className="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
-          >
-            DeepSearch
-          </button>
-          <button
-            className="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
-          >
-            Think
-          </button>
-          <button
-            className="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
-          >
-            Edit Image
-          </button>
-          <button
-            className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            onClick={() => setShowImageModal(true)}
-          >
-            Create Images
-          </button>
-        </div>
-        <ChatInput onSendMessage={handleSendMessage} />
       </main>
       {showImageModal && <ImageModal onClose={() => setShowImageModal(false)} />}
     </div>

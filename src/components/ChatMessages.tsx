@@ -10,6 +10,10 @@ interface ChatMessagesProps {
 }
 
 const ChatMessages: React.FC<ChatMessagesProps> = ({ messages }) => {
+  if (messages.length === 0) {
+    return null;
+  }
+
   return (
     <div className="flex-1 p-4 overflow-y-auto">
       {messages.map((message, index) => (
