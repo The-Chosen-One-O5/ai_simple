@@ -25,18 +25,18 @@ const ImageModal: React.FC<ImageModalProps> = ({ onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-      <div className="bg-gray-900 p-6 rounded-lg w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-4">Create Image</h2>
+    <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
+      <div className="bg-[#1c1c1c] p-6 rounded-2xl w-full max-w-md shadow-lg">
+        <h2 className="text-2xl font-bold mb-4 text-white">Create Image</h2>
         <textarea
-          className="w-full bg-gray-800 border border-gray-700 rounded-lg p-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full bg-[#2c2c2c] border border-[#333] rounded-lg p-3 mb-4 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
           placeholder="Enter a prompt to generate an image"
-          rows={3}
+          rows={4}
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
         />
         <button
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition-colors"
           onClick={handleGenerate}
           disabled={loading}
         >
@@ -48,7 +48,7 @@ const ImageModal: React.FC<ImageModalProps> = ({ onClose }) => {
           </div>
         )}
         <button
-          className="w-full bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded mt-4"
+          className="w-full bg-[#2c2c2c] hover:bg-[#3c3c3c] text-white font-bold py-3 px-4 rounded-lg mt-4 transition-colors"
           onClick={onClose}
         >
           Close

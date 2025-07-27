@@ -1,10 +1,9 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Sidebar from '@/components/Sidebar';
 import Header from '@/components/Header';
-import ChatInput from '@/components/ChatInput';
-import ModelSelector from '@/components/ModelSelector';
+import Logo from '@/components/Logo';
+import MainInput from '@/components/MainInput';
 import ChatMessages from '@/components/ChatMessages';
 import ImageModal from '@/components/ImageModal';
 
@@ -83,33 +82,71 @@ export default function Home() {
     }
   };
 
+  const hasMessages = messages.length > 0;
+
   return (
-    <div className="flex flex-col h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-[#0a0a0a] text-white flex flex-col">
+      {/* Header */}
       <Header />
-      <main className="flex-1 flex flex-col items-center justify-center p-4">
-        <div className="w-full max-w-2xl">
-          <ChatMessages messages={messages} />
-          <ChatInput onSendMessage={handleSendMessage} />
-          <div className="flex justify-center gap-4 mt-4">
-            <button
-              className="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
-            >
-              DeepSearch
-            </button>
-            <button
-              className="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
-            >
-              Think
-            </button>
-            <button
-              className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-              onClick={() => setShowImageModal(true)}
-            >
-              Create Images
-            </button>
+
+      {/* Main Content */}
+      <main className="flex-1 flex flex-col">
+        {!hasMessages ? (
+          /* Empty State - Centered Layout */
+          <div className="flex-1 flex flex-col items-center justify-center px-6">
+            <div className="w-full max-w-3xl mx-auto space-y-8 text-center">
+              {/* Logo Section */}
+              <Logo />
+
+              {/* Main Input Section */}
+              <MainInput
+                onSendMessage={handleSendMessage}
+                model={model}
+                setModel={setModel}
+                hasMessages={false}
+              />
+
+              {/* Action Buttons Section */}
+              <div className="flex items-center justify-center gap-4 pt-4">
+                <button
+                  className="flex items-center gap-2 px-4 py-2 text-sm text-gray-300 hover:text-white transition-colors border border-[#2a2a2a] rounded-lg hover:border-[#3a3a3a] hover:bg-[#1a1a1a]"
+                  onClick={() => setShowImageModal(true)}
+                >
+                  Create Images
+                </button>
+                
+                <button
+                  className="flex items-center gap-2 px-4 py-2 text-sm text-gray-300 hover:text-white transition-colors border border-[#2a2a2a] rounded-lg hover:border-[#3a3a3a] hover:bg-[#1a1a1a]"
+                >
+                  Edit Image
+                </button>
+              </div>
+            </div>
           </div>
-        </div>
+        ) : (
+          /* Chat State - Messages with Bottom Input */
+          <div className="flex-1 flex flex-col">
+            {/* Messages Area */}
+            <div className="flex-1 overflow-y-auto">
+              <ChatMessages messages={messages} />
+            </div>
+            
+            {/* Bottom Input Area */}
+            <div className="bg-[#0a0a0a] p-4">
+              <div className="w-full max-w-4xl mx-auto">
+                <MainInput
+                  onSendMessage={handleSendMessage}
+                  model={model}
+                  setModel={setModel}
+                  hasMessages={true}
+                />
+              </div>
+            </div>
+          </div>
+        )}
       </main>
+
+      {/* Image Modal */}
       {showImageModal && <ImageModal onClose={() => setShowImageModal(false)} />}
     </div>
   );
