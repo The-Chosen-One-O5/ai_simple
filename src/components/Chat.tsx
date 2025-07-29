@@ -14,6 +14,68 @@ const Chat = () => {
   const [showImageModal, setShowImageModal] = useState(false);
 
   const handleSendMessage = async (content: string) => {
+    // Check if it's a /gen command
+    if (content.startsWith('/gen ')) {
+      const prompt = content.substring(5).trim(); // Remove '/gen ' prefix
+      if (!prompt) {
+        setMessages((prev) => [...prev, {
+          role: "assistant",
+          content: "Please provide a prompt after /gen. Example: /gen a beautiful sunset over mountains"
+        }]);
+        return;
+      }
+
+      // Add user message
+      const userMessage: Message = { role: "user", content };
+      setMessages((prev) => [...prev, userMessage]);
+
+      // Add loading message
+      const loadingMessage: Message = {
+        role: "assistant",
+        content: "🎨 Generating image..."
+      };
+      setMessages((prev) => [...prev, loadingMessage]);
+
+      try {
+        const response = await fetch("/api/image", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ prompt }),
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to generate image');
+        }
+
+        const data = await response.json();
+        
+        // Replace loading message with image
+        setMessages((prev) => {
+          const newMessages = [...prev];
+          newMessages[newMessages.length - 1] = {
+            role: "assistant",
+            content: `Generated image for: "${prompt}"`,
+            type: "image",
+            imageUrl: data.imageUrl
+          };
+          return newMessages;
+        });
+      } catch (error) {
+        console.error('Error generating image:', error);
+        // Replace loading message with error
+        setMessages((prev) => {
+          const newMessages = [...prev];
+          newMessages[newMessages.length - 1] = {
+            role: "assistant",
+            content: "Sorry, I couldn't generate the image. Please try again."
+          };
+          return newMessages;
+        });
+      }
+      return;
+    }
+
+    // Regular chat message
     const newMessage: Message = { role: "user", content };
     setMessages((prev) => [...prev, newMessage]);
 

@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 interface Message {
   role: 'user' | 'assistant';
   content: string;
+  type?: 'text' | 'image';
+  imageUrl?: string;
 }
 
 interface ChatMessagesProps {
@@ -56,6 +58,37 @@ const ChatMessages: React.FC<ChatMessagesProps> = ({ messages }) => {
                 : 'bg-[var(--surface)] border border-[var(--border-light)] text-[var(--text-primary)] rounded-bl-md'
             }`}>
               <p className="text-base leading-relaxed whitespace-pre-wrap">{message.content}</p>
+              
+              {/* Display image if it's an image message */}
+              {message.type === 'image' && message.imageUrl && (
+                <div className="mt-3">
+                  <img
+                    src={message.imageUrl}
+                    alt="Generated image"
+                    className="max-w-full h-auto rounded-lg shadow-lg cursor-pointer hover:shadow-xl transition-shadow duration-200"
+                    onClick={() => window.open(message.imageUrl, '_blank')}
+                  />
+                  <div className="flex items-center justify-between mt-2">
+                    <span className="text-xs text-[var(--text-muted)]">Click to view full size</span>
+                    <button
+                      onClick={() => {
+                        const link = document.createElement('a');
+                        link.href = message.imageUrl!;
+                        link.download = 'generated-image.png';
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                      }}
+                      className="text-xs text-[var(--accent)] hover:text-[var(--accent-hover)] flex items-center gap-1"
+                    >
+                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                      </svg>
+                      Download
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
 
               {/* Message Actions */}

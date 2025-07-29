@@ -157,7 +157,7 @@ const MainInput: React.FC<MainInputProps> = ({ onSendMessage, model, setModel, h
               <textarea
                 ref={textareaRef}
                 className="w-full bg-transparent text-[var(--text-primary)] placeholder-[var(--text-muted)] resize-none outline-none text-lg leading-7 min-h-[60px] max-h-[200px] overflow-y-auto py-2"
-                placeholder={hasMessages ? "How can Shakthinathan AI help?" : "What do you want to know?"}
+                placeholder={hasMessages ? "Type your message or use /gen [prompt] to generate images..." : "What do you want to know? (Try /gen [prompt] for images)"}
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
                 onKeyDown={handleKeyDown}
