@@ -29,35 +29,19 @@ const ChatMessages: React.FC<ChatMessagesProps> = ({ messages }) => {
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto px-6 py-8 space-y-6">
+    <div className="w-full max-w-4xl mx-auto px-4 py-6 space-y-4">
       {messages.map((message, index) => (
-        <div key={index} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'} animate-fade-in`}>
-          <div className={`flex max-w-[85%] ${message.role === 'user' ? 'flex-row-reverse' : 'flex-row'} items-start space-x-3`}>
-          {/* Avatar */}
-          <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
-            message.role === 'user'
-              ? 'bg-[var(--surface-hover)] text-[var(--text-primary)] ml-3'
-              : 'bg-[var(--surface-hover)] text-[var(--text-primary)] mr-3'
-          }`}>
-            {message.role === 'user' ? (
-              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
-              </svg>
-            ) : (
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>
-            )}
-          </div>
-
-          {/* Message Content */}
-          <div className={`flex flex-col ${message.role === 'user' ? 'items-end' : 'items-start'}`}>
-            <div className={`px-6 py-4 rounded-2xl ${
-              message.role === 'user'
-                ? 'bg-[var(--surface-hover)] text-[var(--text-primary)] rounded-br-md'
-                : 'bg-[var(--surface)] border border-[var(--border-light)] text-[var(--text-primary)] rounded-bl-md'
-            }`}>
-              <p className="text-base leading-relaxed whitespace-pre-wrap">{message.content}</p>
+        <div key={index} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'} animate-fade-in group`}>
+          <div className={`flex max-w-[75%] ${message.role === 'user' ? 'flex-row-reverse' : 'flex-row'} items-end gap-2`}>
+            
+            {/* Message Content */}
+            <div className={`flex flex-col ${message.role === 'user' ? 'items-end' : 'items-start'}`}>
+              <div className={`message-bubble ${
+                message.role === 'user'
+                  ? 'message-bubble-user'
+                  : 'message-bubble-assistant'
+              }`}>
+                <p className="whitespace-pre-wrap">{message.content}</p>
               
               {/* Display image if it's an image message */}
               {message.type === 'image' && message.imageUrl && (
