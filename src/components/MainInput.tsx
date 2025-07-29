@@ -65,7 +65,7 @@ const MainInput: React.FC<MainInputProps> = ({ onSendMessage, model, setModel, h
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto">
+    <div className="w-full max-w-5xl mx-auto">
       {/* Model Selector and Image Generation Row */}
       <div className="flex items-center justify-between mb-4 px-2">
         {/* Model Selector Dropdown */}
@@ -156,7 +156,7 @@ const MainInput: React.FC<MainInputProps> = ({ onSendMessage, model, setModel, h
             <div className="flex-1 relative">
               <textarea
                 ref={textareaRef}
-                className="w-full bg-transparent text-[var(--text-primary)] placeholder-[var(--text-muted)] resize-none outline-none text-lg leading-7 min-h-[60px] max-h-[200px] overflow-y-auto py-2"
+                className="w-full bg-transparent text-[var(--text-primary)] placeholder-[var(--text-muted)] resize-none outline-none text-lg leading-7 min-h-[80px] max-h-[200px] overflow-y-auto py-3"
                 placeholder={hasMessages ? "Type your message or use /gen [prompt] to generate images..." : "What do you want to know? (Try /gen [prompt] for images)"}
                 value={content}
                 onChange={(e) => setContent(e.target.value)}

@@ -9,6 +9,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Model and messages are required' }, { status: 400 });
     }
 
+    // Use non-streaming for better reliability
     const response = await fetch('https://wow.typegpt.net/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -18,34 +19,27 @@ export async function POST(req: NextRequest) {
       body: JSON.stringify({
         model,
         messages,
-        stream: true,
+        stream: false, // Disable streaming to avoid port closure issues
       }),
     });
 
-    if (!response.body) {
-      return NextResponse.json({ error: 'No response body' }, { status: 500 });
+    if (!response.ok) {
+      const errorData = await response.text();
+      console.error('API Error:', errorData);
+      return NextResponse.json({ error: 'Failed to get response from AI service' }, { status: response.status });
     }
 
-    const reader = response.body.getReader();
-    const stream = new ReadableStream({
-      async start(controller) {
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) {
-            break;
-          }
-          controller.enqueue(value);
-        }
-        controller.close();
-        reader.releaseLock();
-      },
-    });
+    const data = await response.json();
+    
+    // Extract the assistant's message from the response
+    const assistantMessage = {
+      role: 'assistant',
+      content: data.choices?.[0]?.message?.content || 'Sorry, I could not generate a response.'
+    };
 
-    return new Response(stream, {
-      headers: { 'Content-Type': 'text/event-stream' },
-    });
+    return NextResponse.json(assistantMessage);
   } catch (error) {
-    console.error(error);
+    console.error('Chat API Error:', error);
     return NextResponse.json({ error: 'An unexpected error occurred' }, { status: 500 });
   }
 }

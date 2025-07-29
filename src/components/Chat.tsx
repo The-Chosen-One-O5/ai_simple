@@ -126,7 +126,7 @@ const Chat = () => {
           </div>
         )}
         
-        <div className="flex-shrink-0 p-6 flex justify-center">
+        <div className="flex-shrink-0 p-8 flex justify-center">
           <MainInput
             onSendMessage={handleSendMessage}
             model={model}
