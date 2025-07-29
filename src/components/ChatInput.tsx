@@ -60,11 +60,11 @@ const ChatInput: React.FC<ChatInputProps> = ({
               </svg>
             </button>
 
-            {/* Input Field */}
+            {/* Input Field - Made bigger with increased rows and minHeight */}
             <textarea
               className="flex-1 bg-transparent text-white placeholder-gray-400 resize-none outline-none text-lg leading-6"
               placeholder={placeholder}
-              rows={1}
+              rows={3}
               value={content}
               onChange={(e) => setContent(e.target.value)}
               onKeyDown={(e) => {
@@ -73,7 +73,7 @@ const ChatInput: React.FC<ChatInputProps> = ({
                   handleSubmit(e);
                 }
               }}
-              style={{ minHeight: '24px', maxHeight: '120px' }}
+              style={{ minHeight: '80px', maxHeight: '120px' }}
             />
 
             {/* Right Controls */}
@@ -97,3 +97,29 @@ const ChatInput: React.FC<ChatInputProps> = ({
                     className="flex items-center gap-2 px-3 py-1.5 bg-[#2a2a2a] hover:bg-[#3a3a3a] text-gray-300 text-sm rounded-full transition-colors"
                   >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.79 4 4 0 .899-.296 1.748-.782 2.453l-1.82 2.427a1 1 0 01-1.64 0l-1.82-2.427A3.989 3.989 0 018 11a3.989 3.989 0 01.228-2z" />
+                    </svg>
+                    <span>Think</span>
+                  </button>
+
+                  {/* Send Button */}
+                  <button
+                    type="submit"
+                    className="p-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 disabled:bg-gray-500 transition-colors"
+                    disabled={!content.trim()}
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                  </button>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  );
+};
+
+export default ChatInput;
