@@ -50,12 +50,12 @@ const ChatMessages: React.FC<ChatMessagesProps> = ({ messages }) => {
 
           {/* Message Content */}
           <div className={`flex flex-col ${message.role === 'user' ? 'items-end' : 'items-start'}`}>
-            <div className={`px-4 py-3 rounded-2xl ${
+            <div className={`px-6 py-4 rounded-2xl ${
               message.role === 'user'
                 ? 'bg-[var(--surface-hover)] text-[var(--text-primary)] rounded-br-md'
                 : 'bg-[var(--surface)] border border-[var(--border-light)] text-[var(--text-primary)] rounded-bl-md'
             }`}>
-              <p className="text-sm leading-relaxed whitespace-pre-wrap">{message.content}</p>
+              <p className="text-base leading-relaxed whitespace-pre-wrap">{message.content}</p>
             </div>
 
               {/* Message Actions */}
